@@ -1,0 +1,54 @@
+{
+  "dataset": "ad.data",
+  "rows_preserved": 3279,
+  "duplicates_removed": 0,
+  "feature_count": 1558,
+  "class_mapping": {
+    "nonad": 0,
+    "ad": 1
+  },
+  "split_sizes": {
+    "train": 1967,
+    "validation": 656,
+    "test": 656
+  },
+  "model": "RBF-kernel SVC with class_weight='balanced'",
+  "preprocessing": {
+    "continuous": "mean imputation then standard scaling",
+    "binary": "most-frequent imputation; unscaled"
+  },
+  "threshold_selection": {
+    "threshold": 0.7978375044011985,
+    "validation_fpr_strictly_below": 0.05,
+    "minimum_validation_ad_recall_target": 0.5,
+    "validation_metrics": {
+      "precision_ad": 1.0,
+      "recall_ad": 0.6521739130434783,
+      "false_positive_rate": 0.0
+    }
+  },
+  "test_metrics": {
+    "advertisement_precision": 0.9545454545454546,
+    "advertisement_recall": 0.6847826086956522,
+    "f1_score": 0.7974683544303798,
+    "accuracy": 0.9512195121951219,
+    "roc_auc": 0.9666204131976565,
+    "false_positive_rate": 0.005319148936170213
+  },
+  "confusion_matrix": {
+    "labels": [
+      "nonad (0)",
+      "ad (1)"
+    ],
+    "rows_actual_columns_predicted": [
+      [
+        561,
+        3
+      ],
+      [
+        29,
+        63
+      ]
+    ]
+  }
+}
