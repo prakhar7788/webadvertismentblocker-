@@ -1,0 +1,11 @@
+# Web app
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.0
+
+# ML (the SVM model was saved with scikit-learn 1.9.x; it loads on >=1.8.0,
+# printing a harmless InconsistentVersionWarning on older versions).
+scikit-learn>=1.8.0
+pandas>=2.0
+numpy>=1.24
+joblib>=1.3

@@ -1,5 +1,5 @@
 {
-  "dataset": "ad.data",
+  "dataset": "ml\\dataset\\ad.data",
   "rows_preserved": 3279,
   "duplicates_removed": 0,
   "feature_count": 1558,

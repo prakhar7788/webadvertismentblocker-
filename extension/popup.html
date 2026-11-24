@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <h3>🛡️ ML Ad Blocker</h3>
+
+  <label class="row">
+    <input type="checkbox" id="enabled" /> Enable blocking
+  </label>
+
+  <label class="row stack">
+    <span>API base URL</span>
+    <input type="text" id="apiBase" placeholder="http://127.0.0.1:8000" />
+  </label>
+
+  <button id="save">Save</button>
+  <div id="status" class="status"></div>
+
+  <div class="note">
+    Counts reset on reload. Open <code>http://127.0.0.1:8000/demo</code> to test
+    on a page with ad and non-ad slots.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

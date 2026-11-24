@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blocked URLs — ML Ad Blocker</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header>
+  <h1>🛡️ Blocked URLs</h1>
+  <p class="subtitle">URLs the loaded models voted as advertisements (combined = ad)</p>
+</header>
+
+<main>
+  <p><a class="back" href="/">← Back to dashboard</a></p>
+
+  <section class="card">
+    <h2>Blocked list <span id="count" style="color:var(--muted);font-weight:400;font-size:14px;"></span></h2>
+    <div id="demo-note" class="banner demo hidden"></div>
+    <div id="list"></div>
+  </section>
+</main>
+
+<script>
+async function load() {
+  try {
+    const [blockRes, statsRes] = await Promise.all([
+      fetch("/api/blocked").then((r) => r.json()),
+      fetch("/api/stats").then((r) => r.json()),
+    ]);
+    const items = blockRes.blocked || [];
+    $("count").textContent = `(${items.length})`;
+
+    if (statsRes.demo_mode) {
+      $("demo-note").classList.remove("hidden");
+      $("demo-note").innerHTML =
+        "<b>DEMO MODE.</b> These are heuristic predictions, not from trained models.";
+    }
+
+    if (!items.length) {
+      $("list").innerHTML = '<div class="empty">No URLs have been classified as ads yet.</div>';
+      return;
+    }
+    const rows = items.map((it) => {
+      const labels = (it.results || [])
+        .map((r) => `<span class="tag ${r.label}">${r.name}: ${r.label}</span>`)
+        .join(" ");
+      return `<tr>
+        <td class="url">${it.url}</td>
+        <td>${it.time}</td>
+        <td>${labels || '<span class="tag ad">' + it.combined + '</span>'}</td>
+      </tr>`;
+    }).join("");
+    $("list").innerHTML =
+      `<table><thead><tr><th>URL</th><th>Time</th><th>Models</th></tr></thead>` +
+      `<tbody>${rows}</tbody></table>`;
+  } catch (e) {
+    $("list").innerHTML = '<div class="empty">Could not load blocked list: ' + e.message + "</div>";
+  }
+}
+
+const $ = (id) => document.getElementById(id);
+load();
+</script>
+</body>
+</html>

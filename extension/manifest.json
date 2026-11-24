@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "ML Advertisement Blocker",
+  "version": "1.0.0",
+  "description": "Classifies image/resource URLs as ads using a local ML model (FastAPI backend) and removes them. University demo.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ML Advertisement Blocker"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

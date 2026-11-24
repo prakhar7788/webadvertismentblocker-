@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ML Advertisement Blocker — Demo</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header>
+  <h1>🛡️ ML Advertisement Blocker</h1>
+  <p class="subtitle">University minor-project demo · UCI Internet Advertisements dataset · FastAPI + scikit-learn</p>
+</header>
+
+<main>
+  <div id="status-banner" class="banner info hidden"></div>
+  <div id="demo-banner" class="banner demo hidden"></div>
+
+  <section class="card">
+    <h2>Check a URL</h2>
+    <div class="input-row">
+      <input id="url" type="text" placeholder="Enter an image/asset URL, e.g. http://ads.example.com/adclick" />
+      <button id="check">Check</button>
+    </div>
+    <div class="samples">
+      <span>Try a sample:</span>
+      <button class="sample" data-url="http://www.adserver.com/ads/adclick?adid=5&familyid=2&groupid=1&redirect=click&banner">ad URL (token-rich)</button>
+      <button class="sample" data-url="http://www.doubleclick.net/ads/banner/adid/familyid/groupid/click/redirect">doubleclick ad</button>
+      <button class="sample" data-url="http://www.example.com/images/photo.gif">plain image</button>
+      <button class="sample" data-url="https://news.example.com/articles/2024/weather-report">news article</button>
+    </div>
+    <div id="error" class="error hidden"></div>
+  </section>
+
+  <section id="result" class="card hidden">
+    <h2>Prediction for <span id="result-url"></span></h2>
+    <div id="combined" class="combined"></div>
+    <div id="models" class="model-grid"></div>
+    <div id="meta" class="meta"></div>
+  </section>
+
+  <section class="card">
+    <h2>Activity</h2>
+    <div class="stats-row">
+      <div class="stat"><span id="total" class="num">0</span><label>URLs checked</label></div>
+      <div class="stat"><span id="ads" class="num">0</span><label>Ads detected</label></div>
+      <div class="stat"><span id="blocked-count" class="num">0</span><label>Currently blocked</label></div>
+      <a class="stat-link" href="/blocked">View blocked list →</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>How it works</h2>
+    <div class="meta">
+      Each URL is converted into the same 1558-feature vector the models were trained on:
+      image dimensions are imputed to the training mean, <code>url*</code> and <code>ancurl*</code>
+      word features are extracted from the entered URL, and <code>origurl*</code>/<code>alt*</code>/<code>caption*</code>
+      (not available from a URL alone) are set to zero. Each loaded model scores the
+      vector against its own validation-tuned threshold; the combined decision is a
+      majority vote across all loaded models. See the README for full details and limitations.
+    </div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

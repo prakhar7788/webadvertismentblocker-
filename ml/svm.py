@@ -34,7 +34,10 @@ from sklearn.svm import SVC
 
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_PATH = ROOT / "ad.data"
+# Look for the dataset in ml/dataset/ first (its canonical home), then fall back
+# to a copy at the repo root, so the script runs in either layout.
+_DATA_CANDIDATES = [ROOT / "ml" / "dataset" / "ad.data", ROOT / "ad.data"]
+DATA_PATH = next((p for p in _DATA_CANDIDATES if p.exists()), _DATA_CANDIDATES[0])
 ARTIFACT_DIR = Path(__file__).resolve().parent / "artifacts"
 CONTINUOUS_FEATURES = ["height", "width", "aratio"]
 RANDOM_STATE = 42
